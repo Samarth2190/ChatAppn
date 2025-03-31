@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Edit Chat for id: <%= chat._id %></h3>
+    <h5>This message was sent from <span style="text-decoration: underline;color: blue;"><i><%= chat.from %></i></span> to <span style="text-decoration: underline;color: blue;"><i><%= chat.to %></i></span> </h5>
+    <form method="POST" action="/chat/<%= chat._id %>?_method=PUT">
+        <!-- <label for="from">From:</label>
+        <input type="text" id="from" name="from" value="<%= chat.from %>" required><br><br>
+
+        <label for="to">To:</label>
+        <input type="text" id="to" name="to" value="<%= chat.to %>" required><br><br> -->
+
+        <label for="msg">Message:</label>
+        <br>
+        <textarea id="msg" name="msg" required><%= chat.msg %></textarea><br><br>
+
+        <button type="submit">Update</button>
+        <button type="reset">Reset</button>
+        <button type="button" onclick="window.location.href='/chat'">Back</button>
+    </form>
+    
+</body>
+</html>
