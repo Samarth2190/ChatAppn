@@ -50,17 +50,38 @@ app.get('/chat/new', (req,res)=>{
     res.render('new.ejs');
 }      );
 
-app.post('/chat', async (req,res)=>{
+// app.post('/chat', async (req,res)=>{
+//     console.log("POST /chat route hit");
+//     console.log(req.body);
+//     let chat= new Chat({
+//         from: req.body.from,
+//         to: req.body.to,
+//         msg: req.body.msg,
+//         createdAt: new Date(),
+//         updatedAt: new Date(),
+//     });
+//     await chat.save().catch(err=>res.status(400).send(`<script>alert("${err.errors.msg.properties.message}"); window.location.href='/chat';</script>`));
+//     res.redirect('/chat');
+// });
+app.post('/chat', async (req, res) => {
     console.log("POST /chat route hit");
     console.log(req.body);
-    let chat= new Chat({
-        from: req.body.from,
-        to: req.body.to,
-        msg: req.body.msg,
-        createdAt: new Date(),
-    });
-    await chat.save();
-    res.redirect('/chat');
+
+    try {
+        let chat = new Chat({
+            from: req.body.from,
+            to: req.body.to,
+            msg: req.body.msg,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        });
+
+        await chat.save();
+        res.redirect('/chat');
+    } catch (err) {
+        // console.error(err);
+        res.status(400).send(`<script>alert("${err.errors?.msg?.properties?.message || 'An error occurred'}"); window.location.href='/chat/new';</script>`);
+    }
 });
 
 app.get('/chat/:id/edit', async (req,res)=>{
